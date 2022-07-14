@@ -13,6 +13,7 @@ export default {
     app.component('ErrorMessage', ErrorMessage);
 
     defineRule('required', required);
+    defineRule('tos', required);
     defineRule('min', min);
     defineRule('max', max);
     defineRule('alpha_spaces', alphaSpaces);
@@ -25,8 +26,26 @@ export default {
 
     configure({
       generateMessage: (ctx) => {
+        const messages = {
+          required: `The fied ${ctx.field} is required.`,
+          min: `The field ${ctx.field} is too short. `,
+          max: `The field ${ctx.field} is too long. `,
+          alpha_spaces: `The field ${ctx.field} may only contain alphabetical characters and spaces`,
+          email: `The field ${ctx.field} must be valid email.`,
+          min_value: `The field ${ctx.field} is too low`,
+          max_value: `The field ${ctx.field} is too high`,
+          excluded: `You are not allowed to use this value for the field ${ctx.field}.`,
+          country_excluded: 'Due to restrictions, we do not accept users from this location.',
+          passwords_mismatch: 'The passwords dont match.',
+          tos: 'You must accept the Terms of Service.',
+        };
 
-      }
+        const message = messages[ctx.rule.name]
+          ? messages[ctx.rule.name]
+          : `The field ${ctx.field} is invalid.`;
+
+        return message;
+      },
     });
   },
 };
