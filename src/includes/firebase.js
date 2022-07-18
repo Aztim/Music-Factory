@@ -1,6 +1,7 @@
 import { initializeApp } from 'firebase/app';
+import { addDoc, collection, getFirestore } from 'firebase/firestore';
 // import 'firebase/auth';
-// import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyAr1KBBAkWFiUfW-We6WqaNQUnOLb_abHY',
@@ -13,4 +14,15 @@ const firebaseConfig = {
 
 const firebase = initializeApp(firebaseConfig);
 
-export default firebase;
+// const auth = firebase.auth();
+const db = getFirestore(firebase);
+// const userCollection = db.collection('users');
+
+export {
+  db,
+  addDoc,
+  collection,
+  getAuth,
+  createUserWithEmailAndPassword,
+  // userCollection,
+};

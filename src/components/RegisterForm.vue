@@ -84,8 +84,10 @@
 </template>
 
 <script>
-// import firebase from '@/includes/firebase';
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+// import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import {
+  getAuth, createUserWithEmailAndPassword, db, addDoc, collection,
+} from '@/includes/firebase';
 
 export default {
   name: 'RegosterForm',
@@ -126,6 +128,21 @@ export default {
         this.reg_in_submission = false;
         this.reg_alert_variant = 'bg-red-500';
         this.reg_alert_msg = 'An unexpected error occured. Please try agin later.';
+        return;
+      }
+
+      try {
+        await addDoc(collection(db, 'users'), {
+          name: values.name,
+          email: values.email,
+          age: values.age,
+          country: values.country,
+        });
+      } catch (error) {
+        this.reg_in_submission = false;
+        this.reg_alert_variant = 'bg-red-500';
+        this.reg_alert_msg = 'An unexpected error occured. Please try agin later.';
+        return;
       }
 
       this.reg_alert_variant = 'bg-green-500';
