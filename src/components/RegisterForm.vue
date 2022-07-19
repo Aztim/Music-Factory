@@ -85,9 +85,6 @@
 
 <script>
 // import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
-import {
-  getAuth, createUserWithEmailAndPassword, db, addDoc, collection,
-} from '@/includes/firebase';
 
 export default {
   name: 'RegosterForm',
@@ -118,26 +115,8 @@ export default {
       this.reg_alert_variant = 'bg-blue-500';
       this.reg_alert_msg = 'Please wait! Your account is being created.';
 
-      let userCred = null;
-      // const auth = getAuth();
       try {
-        userCred = await createUserWithEmailAndPassword(
-          getAuth(), values.email, values.password,
-        );
-      } catch (error) {
-        this.reg_in_submission = false;
-        this.reg_alert_variant = 'bg-red-500';
-        this.reg_alert_msg = 'An unexpected error occured. Please try agin later.';
-        return;
-      }
-
-      try {
-        await addDoc(collection(db, 'users'), {
-          name: values.name,
-          email: values.email,
-          age: values.age,
-          country: values.country,
-        });
+        await this.$store.dispatch('register', values);
       } catch (error) {
         this.reg_in_submission = false;
         this.reg_alert_variant = 'bg-red-500';
@@ -147,7 +126,7 @@ export default {
 
       this.reg_alert_variant = 'bg-green-500';
       this.reg_alert_msg = 'Success! You account has been created.';
-      console.log(userCred);
+      window.location.reload(); /* refresh the page */
     },
   },
 };
