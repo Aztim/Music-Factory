@@ -4,6 +4,6 @@
 
 @tailwind utilities;
 
-.router-link-active {
+/* .router-link-active {
   @apply text-yellow-500;
-}
+} */

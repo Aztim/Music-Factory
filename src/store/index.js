@@ -47,6 +47,12 @@ export default createStore({
         commit('toggleAuth');
       }
     },
+
+    async signout({ commit }) {
+      await getAuth.signout();
+
+      commit('toggleAuth');
+    },
   },
   getters: {
     // authModalShow: (state) => state.authModalShow,
